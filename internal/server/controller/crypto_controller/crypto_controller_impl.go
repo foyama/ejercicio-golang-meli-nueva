@@ -27,3 +27,22 @@ func (cr *CryptoController) CoinPrice(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, response)
 }
+
+func (cr *CryptoController) CoinPrices(c *gin.Context) {
+	ids := []string{"bitcoin", "lovehearts", "lucent"}
+	response, err := cr.CryptoService.GetCurrentPrices(ids)
+	isPartial := false
+	if err != nil {
+		c.JSON(http.StatusPartialContent, response)
+		return
+	}
+	for _, v := range response {
+		if (*v.Content == service.Content{}) {
+			isPartial = true
+		}
+	}
+	if (isPartial) {
+		c.IndentedJSON(http.StatusPartialContent, response)
+	}
+	c.IndentedJSON(http.StatusOK, response)
+}

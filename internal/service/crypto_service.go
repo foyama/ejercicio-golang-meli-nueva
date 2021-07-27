@@ -13,4 +13,5 @@ type Content struct {
 
 type CryptoService interface {
 	GetCurrentPrice(id string) (*CryptoResponse, error)
+	GetCurrentPrices(ids []string) ([]CryptoResponse, error)
 }

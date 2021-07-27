@@ -6,4 +6,5 @@ import (
 
 type CryptoController interface {
 	CoinPrice(c *gin.Context)
+	CoinPrices(c *gin.Context)
 }

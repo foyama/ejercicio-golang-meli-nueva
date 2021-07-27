@@ -13,5 +13,5 @@ func main() {
 	coingeckoService := coingecko_service.NewCoinGeckoService(coingeckoClient)
 	cryptoController := crypto_controller.NewCryptoController(coingeckoService)
 	router := server.GetMeliServer(cryptoController)
-	router.Run(":8080")
+	router.Run(":8081")
 }
