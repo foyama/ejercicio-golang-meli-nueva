@@ -1,3 +1,5 @@
-module github.com/foyama/ejercicio-golang-meli-nueva
+module ejercicio-golang-meli-nueva
 
 go 1.16
+
+require github.com/gin-gonic/gin v1.7.2

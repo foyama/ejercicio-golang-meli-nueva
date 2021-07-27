@@ -1,9 +1,13 @@
 package coingecko_client
 
 import (
-	melihttp "ejercicio-golang-meli-nueva/pkg/http"
-	//"net/http"
+	"ejercicio-golang-meli-nueva/pkg/http"
+	"encoding/json"
+	"errors"
 )
+
+// HttpError error code different to 200
+var HttpError = errors.New("Error code different to 200") 
 
 type CoinGeckoResponse struct {
 	Id        	string       `json:"id"`
@@ -30,10 +34,17 @@ func NewCoinGeckoClient(url string) *CoinGeckoClient {
 
 func (c *CoinGeckoClient) GetCoinPrice(path string) (*CoinGeckoResponse, error) {
 	endpoint := c.Url + path
-	response, err := melihttp.DoGet(endpoint)
+	response, err := http.DoGet(endpoint)
 	if err != nil {
 		return nil, err
 	}
-
-	return response, nil
+	if response.StatusCode != 200 {
+		return nil, HttpError
+	}
+	coinGeckoResponse := NewCoinGeckResponse()
+	err = json.Unmarshal(response.Body, &coinGeckoResponse)
+	if err != nil {
+		return nil, err
+	}
+	return coinGeckoResponse, nil
 }
