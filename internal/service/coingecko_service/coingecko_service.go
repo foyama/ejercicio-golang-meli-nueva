@@ -1,7 +1,7 @@
 package coingecko_service
 
 import (
-	coingecko_client "ejercicio-golang-meli-nueva/internal/client/coingecko"
+	"ejercicio-golang-meli-nueva/internal/client/coingecko"
 	"ejercicio-golang-meli-nueva/internal/service"
 	"sync"
 )
