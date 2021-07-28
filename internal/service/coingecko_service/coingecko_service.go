@@ -55,16 +55,13 @@ func (c *CoinGeckoService) GetCurrentPrices(ids []string) ([]service.CryptoRespo
 
 func (s *CoinGeckoService) worker(id string, c chan <- service.CryptoResponse, wg *sync.WaitGroup) {
 	defer wg.Done()
+	defer s.Recover(id, c)
 	response, err := s.CoinGeckoClient.GetCoinPrice(id)
 	if err != nil {
 		return
 	}
 	if (response.MarketData.CurrentPrice["usd"] == 0) {
-		c <- service.CryptoResponse{
-			Id: id,
-			Partial: true,
-		}
-		return
+		panic("No coin matched id:" + id)
 	}
 	c <- service.CryptoResponse{
 		Id: id,
@@ -73,5 +70,14 @@ func (s *CoinGeckoService) worker(id string, c chan <- service.CryptoResponse, w
 			Currency: "usd",
 		},
 		Partial: false,
+	}
+}
+
+func (s *CoinGeckoService) Recover(id string, c chan <- service.CryptoResponse) {
+	if r := recover(); r != nil {
+		c <- service.CryptoResponse{
+			Id: id,
+			Partial: true,
+		}
 	}
 }

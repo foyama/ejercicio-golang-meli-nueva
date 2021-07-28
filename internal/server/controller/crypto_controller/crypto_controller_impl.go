@@ -39,5 +39,5 @@ func (cr *CryptoController) CoinPrices(c *gin.Context) {
 			return
 		}
 	}
-	c.IndentedJSON(http.StatusOK, response)
+	c.JSON(http.StatusOK, response)
 }
