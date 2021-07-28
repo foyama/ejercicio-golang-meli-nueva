@@ -59,6 +59,13 @@ func (s *CoinGeckoService) worker(id string, c chan <- service.CryptoResponse, w
 	if err != nil {
 		return
 	}
+	if (response.MarketData.CurrentPrice["usd"] == 0) {
+		c <- service.CryptoResponse{
+			Id: id,
+			Partial: true,
+		}
+		return
+	}
 	c <- service.CryptoResponse{
 		Id: id,
 		Content: &service.Content{
