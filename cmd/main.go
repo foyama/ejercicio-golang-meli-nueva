@@ -1,7 +1,7 @@
 package main
 
 import (
-	coingecko_client "ejercicio-golang-meli-nueva/internal/client/coingecko"
+	"ejercicio-golang-meli-nueva/internal/client/coingecko"
 	"ejercicio-golang-meli-nueva/internal/server"
 	"ejercicio-golang-meli-nueva/internal/server/controller/crypto_controller"
 	"ejercicio-golang-meli-nueva/internal/service/coingecko_service"
